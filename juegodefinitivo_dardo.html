@@ -1,0 +1,57 @@
+<canvas width ="600" height ="400"></canvas>
+
+<script>
+	var pantalla = document.querySelector("canvas");
+    var pincel = pantalla.getContext("2d");
+    pincel.fillStyle = "blue"
+    pincel.fillRect = (0,0,600,400);
+
+function diseharcirculito(x,y,radio,color){
+	pincel.fillStyle = color;
+	pincel.beginPath();
+	pincel.arc(x,y,radio,0,2*Math.PI);
+	pincel.fill();
+
+}
+var radio = 10;
+var xAletorio;
+var yAletorio;
+function limpiarRect(){
+	pincel.clearRect(0,0,600,400);
+}
+var x = 0
+function actuaPantalla(){
+	limpiarRect();
+	xAletorio = sortAleatorio(600);
+    yAletorio = sortAleatorio(400);
+    disenarObjetivo(xAletorio,yAletorio);
+	x++;
+}
+setInterval(actuaPantalla,1000);
+function disenarObjetivo(x,y){
+
+diseharcirculito(x,y,radio + 20,"red");
+diseharcirculito(x,y,radio + 10,"white");
+diseharcirculito(x,y,radio,"red");
+}
+function sortAleatorio(maximo){
+	return Math.floor(Math.random()*maximo)
+}
+function disparo(evento){
+	var x = evento.pageX - pantalla.offsetLeft;
+	var y = evento.pageY - pantalla.offsetTop;
+
+	if((x < xAletorio + radio)&&
+		(x > xAletorio - radio)&&
+		(y < yAletorio + radio)&&
+		(y > yAletorio - radio)){
+alert("tiro certero");
+
+	}
+
+
+	
+}
+pantalla.onclick =disparo;
+
+</script>
